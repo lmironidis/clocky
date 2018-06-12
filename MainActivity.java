@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -17,6 +18,9 @@ import android.widget.DigitalClock;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.os.Process;
+
+
 
 
 public class MainActivity extends AppCompatActivity {
@@ -61,18 +65,25 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
     }
 
-    public void BattIndicator(){
+    //When screen is tapped, the app will exit.
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        finish();
+        return super.dispatchTouchEvent(ev);
+    }
 
+    //Informs user if the battery is charging or not or is full.
+    public void BattIndicator(){
         IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
         Intent intent = this.registerReceiver(null, filter);
         int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
 
         if (status == BatteryManager.BATTERY_STATUS_CHARGING) {
-            Toast.makeText(this, "Battery Charging", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Charging", Toast.LENGTH_SHORT).show();
         }else if (status == BatteryManager.BATTERY_STATUS_FULL){
-            Toast.makeText(this, "Battery Full", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Full", Toast.LENGTH_SHORT).show();
         }else {
-            Toast.makeText(this, "Not Charging", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Not Charging", Toast.LENGTH_SHORT).show();
         }
     }
 
