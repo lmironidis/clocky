@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.BatteryManager;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
@@ -16,6 +17,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.DigitalClock;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.os.Process;
@@ -56,6 +58,12 @@ public class MainActivity extends AppCompatActivity {
 
         //DigitalClock digital = (DigitalClock) findViewById(R.id.mydigitalclock);
         registerReceiver(mBatInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+
+        RelativeLayout relativeLayout = findViewById(R.id.layout);
+        AnimationDrawable animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
+        animationDrawable.setEnterFadeDuration(2000);
+        animationDrawable.setExitFadeDuration(4000);
+        animationDrawable.start();
 
     }
 
